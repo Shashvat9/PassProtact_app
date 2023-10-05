@@ -1,7 +1,7 @@
 package com.example.lockbox;
 
 public class Params {
-    public static final String url = "https://drishtiprabha.000webhostapp.com/LockBox.php";
+    public static final String url = "your api ";
     protected static final String loogdTag = "trying";
     protected static final Integer[] success={1,6,18,8,11,130};
     protected static final String API_KEY ="lock123";
