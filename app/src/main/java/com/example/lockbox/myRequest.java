@@ -88,13 +88,16 @@ public class myRequest extends AsyncTask<String , Void , String> {
                 response -> {
                     Log.d(Params.loogdTag, "myRequest/doInBackground/response/request done " + response);
                     try{
-                        JSONObject jsonObject = new JSONObject(response);
+                        JSONObject jsonObject = new JSONObject(new String(Base64.getDecoder().decode(response)));
                         if(onSecuss!=null){
                             onSecuss.onSecuss(jsonObject);
                         }
                     } catch (JSONException e) {
-                        Log.d(Params.loogdTag, "myRequest/doInBackground/catch: Exception in sendRequest json " + Arrays.toString(e.getStackTrace()));
+                        Log.d(Params.loogdTag, "myRequest/doInBackground/JSONException: Exception in sendRequest json " + Arrays.toString(e.getStackTrace()));
                         onError.onError(Arrays.toString(e.getStackTrace()));
+                    }
+                    catch (IllegalArgumentException ex){
+                        Log.d(Params.loogdTag,"myRequest/doInBackground/JSONException: Exception in sendRequest json "+ex.getMessage());
                     }
                 },
                 error -> {
