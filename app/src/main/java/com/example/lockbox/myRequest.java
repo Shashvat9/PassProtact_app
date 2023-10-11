@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -106,7 +107,7 @@ public class myRequest extends AsyncTask<String , Void , String> {
                 Map<String, String> params = new HashMap<>();
 
                 params.put(post, "1");
-                params.put("json", String.valueOf(PostData));
+                params.put("json", Base64.getEncoder().encodeToString(PostData.toString().getBytes()));
 
                 return params;
             }
