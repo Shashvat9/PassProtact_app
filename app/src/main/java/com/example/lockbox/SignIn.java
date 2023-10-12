@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Base64;
+
 public class SignIn extends AppCompatActivity {
 
     Button signin,signup;

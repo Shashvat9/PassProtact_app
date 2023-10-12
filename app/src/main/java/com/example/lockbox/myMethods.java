@@ -170,7 +170,9 @@ public class myMethods {
         JsonNode passNode = node.get("password");
         JsonNode uidNode = node.get("uid");
 
-        return  nameNode.asText() +" \nUser id = "+uidNode.asText()+" \npassword = "+ passNode.asText();
+        return  new String(Base64.getDecoder().decode(nameNode.asText()))
+                +" \nUser id = "+new String(Base64.getDecoder().decode(uidNode.asText()))
+                +" \npassword = "+ new String(Base64.getDecoder().decode(passNode.asText()));
     }
 
     public boolean isValidEmail(String email) {

@@ -46,11 +46,13 @@ public class MainActivity extends AppCompatActivity {
     String finalArray;
     Vibrator vibrator;
     SharedPreferences get;
+    myMethods methods;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        methods = new myMethods();
 
         get = getSharedPreferences(Params.SHAREDP_REFERENCES, MODE_PRIVATE);
 

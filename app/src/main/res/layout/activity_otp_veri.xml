@@ -33,14 +33,15 @@
         android:background="@drawable/glass"
         android:ems="10"
         android:hint="OTP"
-        android:inputType="textEmailAddress"
+        android:inputType="numberDecimal"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        tools:ignore="TextFields" />
 
     <Button
         android:id="@+id/verify"

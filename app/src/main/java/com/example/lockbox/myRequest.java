@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.JsonObject;
@@ -86,22 +87,27 @@ public class myRequest extends AsyncTask<String , Void , String> {
         StringRequest request = new StringRequest(requestType,
                 urls[0],
                 response -> {
-                    Log.d(Params.loogdTag, "myRequest/doInBackground/response/request done " + response);
+                    Log.d(Params.loogdTag, "myRequest/doInBackground/response/request done " + new String(Base64.getDecoder().decode(response)));
                     try{
                         JSONObject jsonObject = new JSONObject(new String(Base64.getDecoder().decode(response)));
                         if(onSecuss!=null){
                             onSecuss.onSecuss(jsonObject);
                         }
                     } catch (JSONException e) {
-                        Log.d(Params.loogdTag, "myRequest/doInBackground/JSONException: Exception in sendRequest json " + Arrays.toString(e.getStackTrace()));
+                        Log.d(Params.loogdTag, "myRequest/doInBackground/JSONException: Exception in sendRequest json " + e.getMessage());
                         onError.onError(Arrays.toString(e.getStackTrace()));
                     }
                     catch (IllegalArgumentException ex){
-                        Log.d(Params.loogdTag,"myRequest/doInBackground/JSONException: Exception in sendRequest json "+ex.getMessage());
+                        Log.d(Params.loogdTag,"myRequest/doInBackground/IllegalArgumentException: Exception in sendRequest json "+ex.getMessage());
                     }
                 },
                 error -> {
-                    Log.d(Params.loogdTag, "myRequest/doInBackground/error/error in request " + error);
+                    try{
+                        Log.d(Params.loogdTag, "myRequest/doInBackground/error/error in request " + error);
+                    }
+                    catch (Exception e){
+                        Log.d(Params.loogdTag, "myRequest/doInBackground/error/catch in request " + e.getMessage());
+                    }
                     onError.onError(error.toString());
                 }){
             @NonNull

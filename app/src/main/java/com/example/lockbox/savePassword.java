@@ -58,29 +58,35 @@ public class savePassword extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        save.setOnClickListener(v ->{
-            request = new myRequest(this,
-                    methods.setJsonAddPass(id.getText().toString(),name.getText().toString(),pass.getText().toString(),email),
-                    Params.ADD_PASS);
+        if(!id.getText().toString().equals("") && !name.getText().toString().equals("") && 
+                !pass.getText().toString().equals("") && !id.getText().toString().equals("") && 
+                !name.getText().toString().equals("") && !pass.getText().toString().equals(""))
+        {
+            save.setOnClickListener(v ->{
+                request = new myRequest(this,
+                        methods.setJsonAddPass(id.getText().toString(),name.getText().toString(),pass.getText().toString(),email),
+                        Params.ADD_PASS);
 
 
-            request.setOnSecussListener(data -> {
-                if(methods.isSccuss(data)){
-                    Toast.makeText(this, "data added secusses fully.", Toast.LENGTH_SHORT).show();
-                    startActivity(back);
-                }
-                else {
-                    Toast.makeText(this, "error in server", Toast.LENGTH_SHORT).show();
-                    Log.d(Params.loogdTag, "onResume: "+data.toString());
-                }
+                request.setOnSecussListener(data -> {
+                    if(methods.isSccuss(data)){
+                        Toast.makeText(this, "data added secusses fully.", Toast.LENGTH_SHORT).show();
+                        startActivity(back);
+                    }
+                    else {
+                        Toast.makeText(this, "error in server", Toast.LENGTH_SHORT).show();
+                        Log.d(Params.loogdTag, "onResume: "+data.toString());
+                    }
+                });
+
+                request.setOnErrorListener(error -> {
+                    Log.d(Params.loogdTag, "onResume: "+error);
+                });
+
+                request.sendRequest();
             });
-
-            request.setOnErrorListener(error -> {
-                Log.d(Params.loogdTag, "onResume: "+error);
-            });
-
-            request.sendRequest();
-        });
+        }
+        else Toast.makeText(this, "Please enter all the fieleds to save your password", Toast.LENGTH_SHORT).show();
 
     }
 }
