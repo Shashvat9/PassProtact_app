@@ -3,9 +3,13 @@ package com.example.lockbox;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ListView;
@@ -20,6 +24,8 @@ public class SavedPasswordView extends AppCompatActivity {
     SwipeRefreshLayout refreshLayout;
     ListView listView;
     SharedPreferences get;
+    Vibrator vibrator;
+
     String email;
 
 
@@ -27,6 +33,9 @@ public class SavedPasswordView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_password_view);
+
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
         back = findViewById(R.id.back);
         refreshLayout = findViewById(R.id.refresh);
         listView = findViewById(R.id.list1);
@@ -72,6 +81,10 @@ public class SavedPasswordView extends AppCompatActivity {
         });
 
         back.setOnClickListener(v->{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                VibrationEffect vibrationEffect = VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK);
+                vibrator.vibrate(vibrationEffect);
+            } else vibrator.vibrate(200);
             Intent backInt = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(backInt);
         });

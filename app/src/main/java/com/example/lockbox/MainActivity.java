@@ -218,6 +218,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         saved.setOnClickListener(v->{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                VibrationEffect vibrationEffect = VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK);
+                vibrator.vibrate(vibrationEffect);
+            } else vibrator.vibrate(200);
             Intent savedAct = new Intent(this,SavedPasswordView.class);
             startActivity(savedAct);
         });

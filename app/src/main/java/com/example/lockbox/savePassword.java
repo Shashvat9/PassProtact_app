@@ -2,9 +2,14 @@ package com.example.lockbox;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,6 +24,8 @@ public class savePassword extends AppCompatActivity {
     myRequest request;
     myMethods methods;
     Intent back;
+    Vibrator vibrator;
+
     SharedPreferences getShared;
     String email="";
 
@@ -57,12 +64,17 @@ public class savePassword extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
             save.setOnClickListener(v ->{
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    VibrationEffect vibrationEffect = VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK);
+                    vibrator.vibrate(vibrationEffect);
+                } else vibrator.vibrate(200);
                 if(!id.getText().toString().equals("") && !name.getText().toString().equals("") &&
                         !pass.getText().toString().equals("") && !id.getText().toString().equals("") &&
                         !name.getText().toString().equals("") && !pass.getText().toString().equals(""))
-                    {
+                        {
                             request = new myRequest(this,
                                     methods.setJsonAddPass(id.getText().toString(),name.getText().toString(),pass.getText().toString(),email),
                                     Params.ADD_PASS);
@@ -70,6 +82,9 @@ public class savePassword extends AppCompatActivity {
 
                             request.setOnSecussListener(data -> {
                                 if(methods.isSccuss(data)){
+                                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.tone_positive);
+                                    mediaPlayer.start();
+
                                     Toast.makeText(this, "data added secusses fully.", Toast.LENGTH_SHORT).show();
                                     startActivity(back);
                                 }
@@ -84,7 +99,7 @@ public class savePassword extends AppCompatActivity {
                             });
 
                             request.sendRequest();
-                    }
+                        }
                 else Toast.makeText(this, "Please enter all the fieleds to save your password", Toast.LENGTH_SHORT).show();
             });
 
