@@ -4,7 +4,7 @@ public class Params {
     public static final String url = "https://drishtiprabha.000webhostapp.com/LockBox.php";
     protected static final String loogdTag = "trying";
     protected static final Integer[] success={1,6,18,8,11,130};
-    protected static final String API_KEY ="lock123";
+    protected static final String API_KEY ="Your key";
     protected static final String ADD_USER = "add_user";
     protected static final String ADD_PASS = "add_pass";
     protected static final String VALIDATE = "validate";
